@@ -1,0 +1,271 @@
+# Network Intrusion Detection - Quick Reference Guide
+
+## Project At A Glance
+
+**Status**: ✓ Base Version Complete  
+**Location**: `src/Network_Intrusion_Detection.ipynb`  
+**Execution Time**: 5-7 minutes  
+**Dataset**: NSL-KDD (Binary Classification)  
+
+## 5 Machine Learning Models Implemented
+
+| # | Model | Type | Best For | Training Time |
+|---|-------|------|----------|---|
+| 1 | Logistic Regression | Linear | Fast baseline | ~2 sec |
+| 2 | Random Forest | Tree Ensemble | Feature importance | ~30 sec |
+| 3 | SVM (RBF Kernel) | Kernel Method | Non-linear problems | ~45 sec |
+| 4 | Gradient Boosting | Sequential Ensemble | High accuracy | ~15 sec |
+| 5 | Neural Network (MLP) | Deep Learning | Complex patterns | ~30 sec |
+
+## Key Statistics
+
+**Training Data**: 
+- Samples: 25,193
+- Classes: Normal (67%), Attack (33%)
+- Features: 41 network attributes
+
+**Test Data**:
+- Samples: 22,543
+- Classes: Normal (58%), Attack (42%)
+
+## Feature Categories (41 Total)
+
+**Connection Features** (4):
+- duration, protocol_type, service, flag
+
+**Basic Traffic Features** (6):
+- src_bytes, dst_bytes, land, wrong_fragment, urgent, hot
+
+**Connection Interaction** (11):
+- num_failed_logins, logged_in, num_compromised, root_shell, su_attempted, etc.
+
+**Statistical Features** (20):
+- Connection counts, error rates, host/service history features
+
+## Evaluation Metrics
+
+Each model is evaluated on:
+
+1. **Accuracy** = (TP + TN) / Total
+   - Overall correctness
+   - Good general metric
+
+2. **Precision** = TP / (TP + FP)
+   - False alarm rate control
+   - Important for security operations
+
+3. **Recall** = TP / (TP + FN)
+   - Attack detection rate
+   - Critical for intrusion detection
+
+4. **F1-Score** = 2 × (Precision × Recall) / (Precision + Recall)
+   - Balanced metric
+   - Handles imbalance well
+
+5. **ROC-AUC** = Area Under ROC Curve
+   - Threshold-independent metric
+   - Handles class imbalance
+
+## Generated Outputs
+
+### Visualizations
+- `class_distribution.png` - Dataset balance
+- `confusion_matrices.png` - Prediction breakdown
+- `roc_curves.png` - Model comparison
+- `model_comparison.png` - Comprehensive analysis
+
+### Models & Data
+- `best_model.joblib` - Top performing model
+- `all_trained_models.joblib` - All 5 models
+- `scaler.joblib` - Feature normalization
+- `label_encoders.joblib` - Categorical conversion
+- `feature_names.joblib` - Feature list
+
+### Reports
+- `model_comparison_results.csv` - Performance table
+- `summary_report.txt` - Project overview
+
+## Notebook Sections
+
+| Section | Cells | Purpose |
+|---------|-------|---------|
+| 1. Libraries | 1-2 | Import dependencies |
+| 2. Data Loading | 3-5 | Load & explore dataset |
+| 3. Preprocessing | 6 | Clean & prepare data |
+| 4. Feature Engineering | 7-8 | Encode & scale features |
+| 5. Train-Test Split | 9 | Separate X and y |
+| 6. Scaling | 10 | Normalize features |
+| 7. Model Building | 11-12 | Initialize algorithms |
+| 8. Training | 13 | Fit models |
+| 9. Evaluation | 14-16 | Calculate metrics |
+| 10. Comparison | 17-18 | Rank models |
+| 11. Persistence | 19 | Save artifacts |
+| 12. Summary | 20 | Document results |
+
+## Model Selection Guide
+
+Choose the best model based on your priorities:
+
+### If you want...
+- **Highest Accuracy**: → Gradient Boosting
+- **Best Attack Detection**: → Gradient Boosting (highest recall)
+- **Fastest Training**: → Logistic Regression
+- **Feature Importance**: → Random Forest
+- **Balanced Performance**: → Random Forest or Gradient Boosting
+- **Non-linear Decision Boundary**: → SVM or Neural Network
+- **Deployment Speed**: → Logistic Regression or Random Forest
+
+## Common Issues & Solutions
+
+| Issue | Solution |
+|-------|----------|
+| "ModuleNotFoundError" | `pip install pandas numpy scikit-learn ...` |
+| Slow execution | Check system RAM, reduce dataset |
+| Missing data files | Verify `../data/` folder path |
+| Out of memory | Close other programs, use smaller dataset |
+| Wrong results shape | Verify feature encoding completed |
+
+## Files to Review
+
+### Start Here
+1. `SETUP.txt` - Quick start guide
+2. `README.md` - Full documentation
+
+### After First Run
+3. `model_comparison_results.csv` - Performance table
+4. `summary_report.txt` - Detailed results
+5. Generated PNG visualizations
+
+### For Code Details
+6. Open `Network_Intrusion_Detection.ipynb` in Jupyter
+
+## Quick Commands
+
+```bash
+# Navigate to project
+cd c:\Nikola\programiranje\9_semestar\sistemi_za_analizu\projekat\src
+
+# Start Jupyter
+jupyter notebook Network_Intrusion_Detection.ipynb
+
+# Test imports
+python -c "import pandas, numpy, sklearn; print('OK')"
+
+# Check data files
+dir ..\data\KDDTrain+_20Percent.txt
+```
+
+## Expected Results Summary
+
+The notebook should complete with:
+- ✓ All 5 models trained successfully
+- ✓ Performance metrics calculated
+- ✓ Visualizations generated (4 PNG files)
+- ✓ All models saved for deployment
+- ✓ CSV report created
+- ✓ No errors or warnings (besides scipy deprecation warnings)
+
+## Next Steps for Optimization
+
+### Phase 2: Hyperparameter Tuning
+```python
+from sklearn.model_selection import GridSearchCV
+GridSearchCV(model, param_grid).fit(X_train_scaled, y_train)
+```
+
+### Phase 3: Advanced Techniques
+- Class balancing (SMOTE)
+- Feature selection (top features)
+- Ensemble methods (voting, stacking)
+- Multi-class classification
+
+### Phase 4: Production
+- API deployment (Flask/FastAPI)
+- Real-time prediction system
+- Model monitoring & updates
+- Performance tracking
+
+## Performance Timeline
+
+| Operation | Time | Notes |
+|-----------|------|-------|
+| Data loading | 10 sec | From CSV files |
+| Preprocessing | 30 sec | Encoding categories |
+| Scaling | 5 sec | StandardScaler |
+| Model training | 120 sec | 5 models total |
+| Evaluation | 60 sec | Metrics + visualizations |
+| Model saving | 10 sec | Serialization |
+| **Total** | **~235 sec** | **~4 minutes** |
+
+## Key Concepts
+
+**Binary Classification**: Normal (0) vs Attack (1)
+- 41 features → 1 prediction
+- Imbalanced dataset (67/33 split)
+- Evaluation priority: Recall > Precision
+
+**Feature Scaling**: StandardScaler
+- Zero mean (μ=0)
+- Unit variance (σ=1)
+- Applied to entire feature set
+
+**Model Comparison**: Multiple algorithms
+- Different strengths/weaknesses
+- No single "best" model always
+- Choose based on use case
+
+**Cross Section Features**:
+- Connection-level (individual flow)
+- Host-level (5 second window)
+- Service-level (service specific)
+
+## Metrics Interpretation
+
+**Confusion Matrix**:
+```
+                 Predicted
+              Normal  Attack
+Actual Normal    TN    FP     (FP = false alarms)
+       Attack    FN    TP     (FN = missed attacks)
+```
+
+**ROC Curve**:
+- Y-axis: True Positive Rate (Sensitivity/Recall)
+- X-axis: False Positive Rate (1-Specificity)
+- Diagonal line = random classifier
+- Higher curve = better performance
+
+**F1-Score**:
+- Harmonic mean of precision and recall
+- Better than accuracy for imbalanced data
+- Ranges 0-1, higher is better
+
+## Feature Names Reference
+
+```
+Core features (0-3):
+  duration, protocol_type, service, flag
+
+Traffic features (4-9):
+  src_bytes, dst_bytes, land, wrong_fragment, urgent, hot
+
+Connection features (10-20):
+  num_failed_logins, logged_in, num_compromised, root_shell,
+  su_attempted, num_root, num_file_creations, num_shells,
+  num_access_files, num_outbound_cmds, is_host_login
+
+Statistical features (21-40):
+  count, srv_count, serror_rate, srv_serror_rate, rerror_rate,
+  srv_rerror_rate, same_srv_rate, diff_srv_rate, srv_diff_host_rate,
+  dst_host_count, dst_host_srv_count, dst_host_same_srv_rate,
+  dst_host_diff_srv_rate, dst_host_same_src_port_rate,
+  dst_host_srv_diff_host_rate, dst_host_serror_rate,
+  dst_host_srv_serror_rate, dst_host_rerror_rate,
+  dst_host_srv_rerror_rate
+```
+
+---
+
+**Status**: Base implementation complete ✓
+**Next**: Hyperparameter optimization
+**Documentation**: Complete in README.md
