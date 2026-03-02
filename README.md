@@ -1,4 +1,4 @@
-# Detekcija Napada na Mrežnih 
+# Detekcija Napada na Mrežu 
 
 Projekat za detekciju mrežnih napada korišćenjem mašinskog učenja na NSL-KDD datasetu.
 
